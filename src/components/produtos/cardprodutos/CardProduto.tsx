@@ -76,7 +76,7 @@ function CardProduto({ produto }: CardProdutoProps) {
         >
           <img
             src={produto.foto}
-            alt={produto.titulo}
+            alt={produto.nome}
             className="
               h-44 max-w-full object-contain
               transition-transform duration-300
@@ -89,7 +89,7 @@ function CardProduto({ produto }: CardProdutoProps) {
       {/* Informações */}
       <div className="flex flex-col gap-2 px-5 py-5">
         <h2 className="line-clamp-2 min-h-14 text-center text-lg font-bold uppercase tracking-wide text-white">
-          {produto.titulo}
+          {produto.nome}
         </h2>
 
         <p className="text-center text-xs uppercase tracking-widest text-cyan-300">

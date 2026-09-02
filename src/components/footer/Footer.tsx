@@ -19,7 +19,7 @@ function Footer() {
 
         <div className="flex flex-wrap justify-center gap-3">
           <a
-            href="#"
+            href="https://www.linkedin.com/in/joel-cunha-ramalho-filho/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"

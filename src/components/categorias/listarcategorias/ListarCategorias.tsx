@@ -5,6 +5,7 @@ import { AuthContext } from "../../../contexts/AuthContext"
 import type Categoria from "../../../model/Categoria"
 import { buscar } from "../../../service/Service"
 import CardCategorias from "../cardcategorias/CardCategorias"
+import { ToastAlerta } from "../../../utils/ToastAlerta"
 
 function ListarCategorias() {
   const navigate = useNavigate()
@@ -17,7 +18,7 @@ function ListarCategorias() {
 
   useEffect(() => {
     if (token === "") {
-      alert("Você precisa estar logado!")
+      ToastAlerta("Você precisa estar logado!", 'info')
       navigate("/")
       return
     }

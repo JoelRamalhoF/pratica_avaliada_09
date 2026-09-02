@@ -13,6 +13,8 @@ import { AuthContext } from "../../../contexts/AuthContext"
 import type Categoria from "../../../model/Categoria"
 import type Produto from "../../../model/Produto"
 import { buscar, cadastrar, atualizar } from "../../../service/Service"
+import { ToastAlerta } from "../../../utils/ToastAlerta"
+
 
 function FormProduto() {
   const navigate = useNavigate()
@@ -23,8 +25,7 @@ function FormProduto() {
 
   const [produto, setProduto] = useState<Produto>({
     id: 0,
-    titulo: "",
-    autor: "",
+    nome: "",
     preco: 0,
     foto: "",
     categoria: null,
@@ -35,7 +36,7 @@ function FormProduto() {
 
   useEffect(() => {
     if (token === "") {
-      alert("Você precisa estar logado!")
+      ToastAlerta("Você precisa estar logado!", 'info')
       navigate("/")
     }
   }, [token, navigate])
@@ -80,14 +81,10 @@ function FormProduto() {
     }
   }
 
-  function atualizarEstado(
-    evento: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) {
-    const { name, value } = evento.target
-
+  function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
     setProduto({
       ...produto,
-      [name]: value,
+      [e.target.name]: e.target.value,
     })
   }
 
@@ -114,7 +111,7 @@ function FormProduto() {
           },
         })
 
-        alert("Produto atualizado com sucesso!")
+        ToastAlerta("Produto atualizado com sucesso!", 'sucesso')
       } else {
         await cadastrar(`/produtos`, produto, setProduto, {
           headers: {
@@ -122,7 +119,7 @@ function FormProduto() {
           },
         })
 
-        alert("Produto cadastrado com sucesso!")
+        ToastAlerta("Produto cadastrado com sucesso!", 'sucesso')
       }
 
       navigate("/produtos")
@@ -131,7 +128,7 @@ function FormProduto() {
         handleLogout()
         navigate("/")
       } else {
-        alert("Erro ao salvar o produto.")
+        ToastAlerta("Erro ao salvar o produto.", 'erro')
       }
     } finally {
       setIsLoading(false)
@@ -149,34 +146,17 @@ function FormProduto() {
         onSubmit={salvarProduto}
       >
         <div className="flex flex-col gap-2">
-          <label htmlFor="titulo" className="font-medium">
+          <label htmlFor="nome" className="font-medium">
             Nome do Produto
           </label>
 
           <input
             type="text"
-            id="titulo"
-            name="titulo"
+            id="nome"
+            name="nome"
             placeholder="Insira o nome do produto"
             required
-            value={produto.titulo}
-            onChange={atualizarEstado}
-            className="border-2 border-slate-700 rounded p-2 bg-white"
-          />
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <label htmlFor="autor" className="font-medium">
-            Autor
-          </label>
-
-          <input
-            type="text"
-            id="autor"
-            name="autor"
-            placeholder="Insira o autor"
-            required
-            value={produto.autor}
+            value={produto.nome}
             onChange={atualizarEstado}
             className="border-2 border-slate-700 rounded p-2 bg-white"
           />
