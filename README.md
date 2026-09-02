@@ -1,134 +1,191 @@
-# 🎮 Game Store - Loja de Games
+# 🎮 JRF Games
 
-Uma aplicacao web moderna e responsiva para uma loja de games, desenvolvida com **React**, **TypeScript** e **Vite**.
+> Loja virtual de games com tema cyberpunk, desenvolvida como parte da Prática Avaliada 09 da Generation Brasil.
 
-[![React](https://img.shields.io/badge/React-18.3.1-61dafb?style=for-the-badge&logo=react)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.5.3-3178c6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-5.4.2-646cff?style=for-the-badge&logo=vite)](https://vitejs.dev/)
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-5-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 
-## 📖 Sobre o Projeto
+## 📖 Sobre o projeto
 
-Este projeto e uma **loja virtual de games** que permite aos usuarios:
+A **JRF Games** é uma aplicação frontend de uma loja virtual de games. O projeto consome uma API REST para autenticação e gerenciamento de categorias e produtos, além de oferecer uma página de perfil e um simulador de carrinho de compras.
 
-- 🛒 Navegar por produtos de games organizados por categorias
-- 🔍 Buscar produtos especificos
-- ➕ Adicionar itens ao carrinho de compras
-- 👤 Realizar cadastro e login de usuarios
-- 📝 Gerenciar perfil de usuario
-- 📱 Interface responsiva para desktop e mobile
+A interface foi personalizada com uma identidade visual cyberpunk, usando tons escuros, ciano, azul e fúcsia, cards com efeitos neon e navbar com glassmorphism.
 
-## 🚀 Funcionalidades
+## ✨ Funcionalidades
 
-- **Catalogo de Produtos**: Visualizacao de jogos e acessorios com detalhes
-- **Carrinho de Compras**: Adicionar, remover e gerenciar itens
-- **Autenticacao**: Sistema de login e cadastro de usuarios
-- **Context API**: Gerenciamento de estado global com `AuthContext`
-- **Componentizacao**: Estrutura modular com componentes reutilizaveis
-- **Rotas**: Navegacao entre paginas (Home, Login, Cadastro, Perfil)
+- Cadastro e login de usuários
+- Controle de acesso às páginas internas por token
+- Listagem, cadastro, edição e exclusão de categorias
+- Listagem, cadastro, edição e exclusão de produtos
+- Associação de produtos a categorias
+- Busca de jogos pela navbar
+- Página de perfil com dados do usuário autenticado
+- Carrinho de compras com Context API
+- Adição, remoção e alteração de quantidade dos itens
+- Cálculo automático da quantidade total e valor total do carrinho
+- Finalização simulada de compra com limpeza do carrinho
+- Feedback de ações com React Toastify e loaders
+- Layout responsivo para desktop e dispositivos móveis
 
-## 🏗️ Estrutura do Projeto
+## 🧰 Tecnologias
 
-```
+- React
+- TypeScript
+- Vite
+- Tailwind CSS 4
+- React Router DOM
+- Axios
+- React Toastify
+- React Spinners
+- Phosphor Icons
+- React Number Format
+- Context API
+
+## 🔗 API consumida
+
+O projeto utiliza a API Loja de Games disponibilizada pela Generation Brasil:
+
+- [API Loja de Games](https://lojagames-moom.onrender.com)
+
+Os recursos principais consumidos são:
+
+- `/usuarios/cadastrar`
+- `/usuarios/logar`
+- `/categorias`
+- `/produtos`
+
+## 🗂️ Estrutura do projeto
+
+```text
 src/
-├── components/          # Componentes reutilizaveis
-│   ├── carrinho/        # Componentes do carrinho
-│   ├── categorias/      # Componentes de categorias
-│   ├── footer/          # Rodape
-│   ├── navbar/          # Barra de navegacao
-│   └── produtos/        # Componentes de produtos
-├── contexts/            # Context API
-│   └── AuthContext.tsx  # Contexto de autenticacao
-├── model/               # Modelos de dados
-│   ├── Categoria.ts     # Modelo de categoria
-│   ├── Produto.ts       # Modelo de produto
-│   ├── Usuario.ts       # Modelo de usuario
-│   └── UsuarioLogin.ts  # Modelo de login
-├── pages/               # Paginas da aplicacao
-│   ├── cadastro/        # Pagina de cadastro
-│   ├── home/            # Pagina inicial
-│   ├── login/           # Pagina de login
-│   └── perfil/          # Pagina de perfil
-├── service/             # Servicos e chamadas API
-│   └── Service.ts       # Configuracao de servicos
-├── App.tsx              # Componente principal
-├── main.tsx             # Ponto de entrada
-└── index.css            # Estilos globais
+├── components/
+│   ├── carrinho/
+│   │   ├── cardcart/
+│   │   └── cart/
+│   ├── categorias/
+│   │   ├── cardcategorias/
+│   │   ├── deletarcategorias/
+│   │   ├── formcategoria/
+│   │   └── listarcategorias/
+│   ├── footer/
+│   ├── navbar/
+│   └── produtos/
+│       ├── cardprodutos/
+│       ├── deletarproduto/
+│       ├── formproduto/
+│       ├── listaprodutos/
+│       └── modalproduto/
+├── contexts/
+│   ├── AuthContext.tsx
+│   └── CartContext.tsx
+├── model/
+│   ├── Categoria.ts
+│   ├── Produto.ts
+│   ├── Usuario.ts
+│   └── UsuarioLogin.ts
+├── pages/
+│   ├── cadastro/
+│   ├── home/
+│   ├── login/
+│   └── perfil/
+├── service/
+│   └── Service.ts
+├── utils/
+│   └── ToastAlerta.ts
+├── App.tsx
+├── main.tsx
+└── index.css
 ```
 
-## 🛠️ Tecnologias Utilizadas
+## 🧭 Rotas
 
-- **Frontend**: React 18.3.1
-- **Linguagem**: TypeScript 5.5.3
-- **Build Tool**: Vite 5.4.2
-- **Estilizacao**: CSS3
-- **Linting**: ESLint 9.9.0
-- **Formatacao**: Prettier
-- **Gerenciamento de Estado**: Context API
+| Rota | Página | Descrição |
+|---|---|---|
+| `/` | Login | Autenticação do usuário |
+| `/cadastro` | Cadastro | Criação de uma nova conta |
+| `/home` | Home | Página inicial e catálogo de produtos |
+| `/produtos` | ListaProdutos | Listagem de produtos cadastrados |
+| `/cadastrarproduto` | FormProduto | Cadastro de produto |
+| `/editarproduto/:id` | FormProduto | Edição de produto |
+| `/deletarproduto/:id` | DeletarProduto | Exclusão de produto |
+| `/categorias` | ListarCategorias | Listagem de categorias |
+| `/cadastrarcategoria` | FormCategoria | Cadastro de categoria |
+| `/editarcategoria/:id` | FormCategoria | Edição de categoria |
+| `/deletarcategoria/:id` | DeletarCategoria | Exclusão de categoria |
+| `/perfil` | Perfil | Dados do usuário autenticado |
+| `/carrinho` | Cart | Simulador de carrinho de compras |
 
-## 📦 Instalacao
+## 🛒 Carrinho de compras
 
-Siga os passos abaixo para rodar o projeto localmente:
+O carrinho é gerenciado pelo `CartContext` e funciona apenas no frontend, sem persistência na API.
 
-### Pre-requisitos
+- Adiciona um produto ao carrinho
+- Aumenta ou reduz a quantidade de cada item
+- Remove um item específico
+- Calcula subtotal por item
+- Calcula quantidade total de itens
+- Calcula valor total da compra
+- Limpa o carrinho ao finalizar a compra
 
-- Node.js (versao 18 ou superior)
-- npm ou yarn
+## 🚀 Como executar localmente
 
-### Passos
+### Pré-requisitos
 
-1. **Clone o repositorio**
-   ```bash
-   git clone https://github.com/JoelRamalhoF/pratica_avaliada_09.git
-   cd pratica_avaliada_09
-   ```
+- Node.js 18 ou superior
+- npm
 
-2. **Instale as dependencias**
-   ```bash
-   npm install
-   ```
+### Instalação
 
-3. **Execute o servidor de desenvolvimento**
-   ```bash
-   npm run dev
-   ```
+1. Clone o repositório:
 
-4. **Acesse a aplicacao**
-   - Abra seu navegador e acesse `http://localhost:5173`
+```bash
+git clone https://github.com/JoelRamalhoF/pratica_avaliada_09.git
+```
 
-## 📝 Scripts Disponiveis
+2. Acesse a pasta do projeto:
 
-| Comando | Descricao |
-|---------|-----------|
+```bash
+cd pratica_avaliada_09
+```
+
+3. Instale as dependências:
+
+```bash
+npm install
+```
+
+4. Execute o projeto:
+
+```bash
+npm run dev
+```
+
+5. Acesse no navegador:
+
+```text
+http://localhost:5173
+```
+
+## 📜 Scripts disponíveis
+
+| Comando | Descrição |
+|---|---|
 | `npm run dev` | Inicia o servidor de desenvolvimento |
-| `npm run build` | Gera build de producao na pasta `dist` |
-| `npm run preview` | Visualiza o build de producao |
-| `npm run lint` | Executa a analise de codigo com ESLint |
-
-## 🎯 Modelos de Dados
-
-O projeto utiliza TypeScript para tipagem forte com os seguintes modelos:
-
-- **Produto**: id, nome, descricao, preco, imagem, categoria
-- **Categoria**: id, nome, descricao
-- **Usuario**: id, nome, email, senha
-- **UsuarioLogin**: email, senha
-
-## 🔧 Configuracao
-
-O projeto esta configurado com:
-
-- **Vite**: Build tool rapido e otimizado para React
-- **TypeScript**: Tipagem estatica para maior seguranca
-- **ESLint**: Analise e correcao de codigo
-- **Prettier**: Formatacao automatica de codigo
+| `npm run build` | Gera a build de produção |
+| `npm run preview` | Visualiza a build de produção localmente |
+| `npm run lint` | Executa a análise estática com ESLint |
 
 ## 📱 Responsividade
 
-A aplicacao foi desenvolvida com foco em **mobile-first**, garantindo uma experiencia adequada em:
+A aplicação foi adaptada para diferentes tamanhos de tela, incluindo:
 
-- 📱 Dispositivos moveis
-- 💻 Tablets
-- 🖥️ Desktops
+- Celulares
+- Tablets
+- Desktops
+
+A navbar possui menu hambúrguer em telas menores, e as grades de produtos, categorias e carrinho se reorganizam conforme a largura disponível.
 
 ## 👨‍💻 Autor
 
@@ -136,24 +193,18 @@ A aplicacao foi desenvolvida com foco em **mobile-first**, garantindo uma experi
 
 - GitHub: [@JoelRamalhoF](https://github.com/JoelRamalhoF)
 
-## 📄 Licenca
+## 📚 Contexto acadêmico
 
-Este projeto foi desenvolvido para fins academicos e de aprendizado.
+Projeto desenvolvido para a **Prática Avaliada 09**, com foco em consumo de API REST, CRUD com relacionamento entre Produto e Categoria, perfil de usuário autenticado e simulador de carrinho de compras.
 
-## 🙏 Agradecimentos
+## 📄 Licença
 
-Projeto desenvolvido como parte de uma pratica avaliada, demonstrando habilidades em:
-
-- Desenvolvimento Frontend com React
-- TypeScript e tipagem de dados
-- Componentizacao e reutilizacao de codigo
-- Gerenciamento de estado com Context API
-- Estruturacao de projetos escalaveis
+Projeto desenvolvido para fins acadêmicos e de aprendizado.
 
 ---
 
 <div align="center">
 
-**Feito com ❤️ para a comunidade de desenvolvedores**
+Feito por Joel Ramalho Filho 🎮
 
 </div>
