@@ -1,8 +1,24 @@
+import { useState, type FormEvent } from "react"
 import { MagnifyingGlassIcon } from "@phosphor-icons/react"
+import { useNavigate } from "react-router-dom"
 
 function SearchForm() {
+  const navigate = useNavigate()
+  const [busca, setBusca] = useState("")
+
+  function buscarProduto(evento: FormEvent<HTMLFormElement>) {
+    evento.preventDefault()
+
+    if (busca.trim() === "") {
+      navigate("/produtos")
+      return
+    }
+
+    navigate(`/produtos?nome=${busca}`)
+  }
+
   return (
-    <form className="relative flex w-full items-center">
+    <form className="relative flex w-full items-center" onSubmit={buscarProduto}>
       <div className="relative flex w-full items-center">
         <input
           className="
@@ -16,6 +32,8 @@ function SearchForm() {
           placeholder="Buscar jogos..."
           id="busca"
           name="busca"
+          value={busca}
+          onChange={(evento) => setBusca(evento.target.value)}
         />
 
         <button

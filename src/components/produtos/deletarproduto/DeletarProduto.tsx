@@ -1,29 +1,155 @@
+import { useState, useContext, useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+import { ClipLoader } from "react-spinners"
+import { TrashIcon, WarningIcon, XIcon } from "@phosphor-icons/react"
+import { AuthContext } from "../../../contexts/AuthContext"
+import type Produto from "../../../model/Produto"
+import { buscar, deletar } from "../../../service/Service"
+import { ToastAlerta } from "../../../utils/ToastAlerta"
+
 function DeletarProduto() {
-    return (
-        <div className='container w-full max-w-md mx-auto px-4 pt-20 md:pt-6'>
-            <h1 className='text-3xl md:text-4xl text-center py-4'>Deletar Produto</h1>
-            <p className='text-center font-semibold mb-4 text-base md:text-lg'>
-                Você tem certeza de que deseja apagar o produto a seguir?</p>
-            <div className='border flex flex-col rounded-2xl overflow-hidden justify-between'>
-                <header
-                    className='py-2 px-4 md:px-6 bg-slate-600 text-white font-bold text-lg md:text-2xl'>
-                    Produto
-                </header>
-                <p className='p-4 md:p-8 text-xl md:text-3xl bg-white h-full'>Nome do Produto</p>
-                <div className="flex flex-row">
-                    <button
-                        className='text-slate-100 bg-red-500 hover:bg-red-700 w-full py-2 text-base md:text-lg'
-                    >
-                        Não
-                    </button>
-                    <button
-                        className='w-full text-slate-100 bg-teal-600 hover:bg-teal-800 flex items-center justify-center text-base md:text-lg'
-                    >
-                        <span>Sim</span>
-                    </button>
-                </div>
-            </div>
+  const navigate = useNavigate()
+
+  const [produto, setProduto] = useState<Produto>({} as Produto)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const { usuario, handleLogout } = useContext(AuthContext)
+  const token = usuario.token
+
+  const { id } = useParams<{ id: string }>()
+
+  async function buscarPorId(id: string) {
+    try {
+      await buscar(`/produtos/${id}`, setProduto, {
+        headers: {
+          Authorization: token,
+        },
+      })
+    } catch (error: any) {
+      if (error.toString().includes("401")) {
+        handleLogout()
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (token === "") {
+      ToastAlerta("Você precisa estar logado!", "info")
+      navigate("/")
+    }
+  }, [token])
+
+  useEffect(() => {
+    if (id !== undefined) {
+      buscarPorId(id)
+    }
+  }, [id])
+
+  async function deletarProduto() {
+    setIsLoading(true)
+
+    try {
+      await deletar(`/produtos/${id}`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+
+      ToastAlerta("Produto apagado com sucesso!", "sucesso")
+    } catch (error: any) {
+      if (error.toString().includes("401")) {
+        handleLogout()
+      } else {
+        ToastAlerta("Erro ao deletar o produto.", "erro")
+      }
+    }
+
+    setIsLoading(false)
+    retornar()
+  }
+
+  function retornar() {
+    navigate("/produtos")
+  }
+
+  return (
+    <main className="min-h-screen bg-[#070711] px-4 py-10">
+      <div className="mx-auto w-full max-w-md">
+        <div className="mb-6 text-center">
+          <div className="mb-3 flex justify-center">
+            <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-fuchsia-400/50 bg-fuchsia-500/10 text-fuchsia-400 shadow-[0_0_20px_rgba(217,70,239,0.35)]">
+              <WarningIcon size={30} weight="bold" />
+            </span>
+          </div>
+
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-cyan-400">
+            Área restrita
+          </p>
+
+          <h1 className="mt-2 text-3xl font-black uppercase tracking-wide text-white md:text-4xl">
+            Deletar produto
+          </h1>
         </div>
-    )
+
+        <section className="overflow-hidden rounded-2xl border border-cyan-400/40 bg-slate-950/90 shadow-[0_0_18px_rgba(34,211,238,0.2)]">
+          <div className="h-1 w-full bg-gradient-to-r from-cyan-400 via-blue-500 to-fuchsia-500" />
+
+          <header className="flex items-center gap-3 border-b border-cyan-400/20 bg-slate-900/80 px-5 py-4">
+            <TrashIcon size={22} weight="bold" className="text-fuchsia-400" />
+
+            <span className="text-sm font-bold uppercase tracking-[0.2em] text-cyan-300">
+              Confirmação de exclusão
+            </span>
+          </header>
+
+          <div className="px-6 py-6">
+            <p className="mb-5 text-center text-sm leading-relaxed text-slate-300">
+              Você tem certeza de que deseja apagar este produto? Esta ação não
+              poderá ser desfeita.
+            </p>
+
+            <div className="rounded-xl border border-fuchsia-500/30 bg-fuchsia-500/5 px-5 py-5 text-center">
+              <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-fuchsia-300">
+                Produto selecionado
+              </p>
+
+              <p className="break-words text-xl font-bold uppercase tracking-wide text-white">
+                {produto.nome}
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 border-t border-cyan-400/20">
+            <button
+              type="button"
+              onClick={retornar}
+              disabled={isLoading}
+              className="flex items-center justify-center gap-2 bg-slate-800 py-3 font-bold uppercase tracking-wide text-slate-200 transition hover:bg-slate-700 disabled:opacity-60"
+            >
+              <XIcon size={19} weight="bold" />
+              Não
+            </button>
+
+            <button
+              type="button"
+              onClick={deletarProduto}
+              disabled={isLoading}
+              className="flex items-center justify-center gap-2 bg-gradient-to-r from-fuchsia-600 to-pink-700 py-3 font-bold uppercase tracking-wide text-white transition hover:from-fuchsia-500 hover:to-pink-600 hover:shadow-[0_0_18px_rgba(217,70,239,0.65)] disabled:opacity-60"
+            >
+              {isLoading ? (
+                <ClipLoader color="#ffffff" size={22} />
+              ) : (
+                <>
+                  <TrashIcon size={19} weight="bold" />
+                  Sim, deletar
+                </>
+              )}
+            </button>
+          </div>
+        </section>
+      </div>
+    </main>
+  )
 }
+
 export default DeletarProduto

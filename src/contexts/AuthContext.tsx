@@ -35,7 +35,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         try {
             await login('/usuarios/logar', usuarioLogin, setUsuario)
 
-            // Sem alert aqui.
+            // Sem ToastAlerta aqui.
             // O Login.tsx detecta o token e redireciona para /home.
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {

@@ -9,6 +9,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
 import { AuthContext } from '../../contexts/AuthContext'
 import type UsuarioLogin from '../../model/UsuarioLogin'
+import { ToastAlerta } from '../../utils/ToastAlerta'
 
 function Login() {
   const navigate = useNavigate()
@@ -37,9 +38,9 @@ function Login() {
 
     try {
       await handleLogin(usuarioLogin)
-      alert('Usuário logado com sucesso!')
+      ToastAlerta('Usuário logado com sucesso!', 'sucesso')
     } catch (error) {
-      alert('Usuário ou senha incorretos!')
+      ToastAlerta('Usuário ou senha incorretos!', 'erro')
     }
   }
 

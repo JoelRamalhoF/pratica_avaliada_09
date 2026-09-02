@@ -19,7 +19,7 @@ function Home() {
             <h2 className="text-center text-3xl font-black uppercase tracking-wide md:text-left md:text-5xl">
               Seja{" "}
               <span className="bg-gradient-to-r from-cyan-400 to-fuchsia-500 bg-clip-text text-transparent">
-                bem-vinde!
+                bem-vindo!
               </span>
             </h2>
 

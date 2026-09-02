@@ -1,6 +1,22 @@
-import { UserIcon } from "@phosphor-icons/react";
+import { useContext, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { UserIcon } from "@phosphor-icons/react"
+import { AuthContext } from "../../contexts/AuthContext"
+import { ToastAlerta } from "../../utils/ToastAlerta"
 
 function Perfil() {
+  const navigate = useNavigate()
+
+  const { usuario } = useContext(AuthContext)
+  const token = usuario.token
+
+  useEffect(() => {
+    if (token === "") {
+      ToastAlerta("Você precisa estar logado!", 'info')
+      navigate("/")
+    }
+  }, [token])
+
   return (
     <div className='container mx-auto px-4 sm:px-6 max-w-7xl rounded-2xl overflow-hidden'>
       <img
@@ -9,15 +25,33 @@ function Perfil() {
         alt="Capa do Perfil"
       />
 
-      <div className='rounded-full w-28 h-28 sm:w-40 sm:h-40 md:w-56 md:h-56 mx-auto -mt-16 sm:-mt-24 md:-mt-32 border-8 border-white relative z-10 bg-slate-300 flex items-center justify-center'>
-        <UserIcon size={64} weight="bold" className="text-slate-600" />
+      <div className='rounded-full w-28 h-28 sm:w-40 sm:h-40 md:w-56 md:h-56 mx-auto -mt-16 sm:-mt-24 md:-mt-32 border-8 border-white relative z-10 bg-slate-300 flex items-center justify-center overflow-hidden'>
+        {usuario.foto ? (
+          <img
+            src={usuario.foto}
+            alt="Foto do usuário"
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <UserIcon
+            size={64}
+            weight="bold"
+            className="text-slate-600"
+          />
+        )}
       </div>
 
       <div className="relative -mt-12 sm:-mt-16 md:-mt-20 mb-4 min-h-64 flex flex-col gap-1 bg-slate-600 text-white text-base sm:text-xl md:text-2xl items-center justify-center rounded-b-2xl px-4 py-6 text-center">
-        <p className="font-bold wrap-break-word">Nome do Usuário</p>
-        <p className="text-slate-200 wrap-break-word">usuario@email.com</p>
+        <p className="font-bold wrap-break-word">
+          {usuario.nome}
+        </p>
+
+        <p className="text-slate-200 wrap-break-word">
+          {usuario.usuario}
+        </p>
+
         <p className="text-sm sm:text-base text-slate-300">
-          Nascimento: 01/01/2000
+          Nascimento: {usuario.dataNascimento}
         </p>
       </div>
     </div>
