@@ -17,7 +17,7 @@ function CardCart({ item }: CardProdutosProps) {
         <img
           src={item.foto}
           className='max-h-full max-w-full object-contain'
-          alt={item.titulo}
+          alt={item.nome}
         />
       </div>
 
@@ -26,7 +26,7 @@ function CardCart({ item }: CardProdutosProps) {
         <div className='flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 sm:gap-4'>
           <div className='min-w-0'>
             <h3 className='font-semibold text-gray-800 mb-1 line-clamp-2'>
-              {item.titulo}
+              {item.nome}
             </h3>
             <span className='inline-block text-[11px] font-medium text-blue-700 bg-blue-50 uppercase tracking-wide px-2 py-0.5 rounded-full'>
               {item.categoria?.tipo}
