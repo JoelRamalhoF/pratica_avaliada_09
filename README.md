@@ -78,8 +78,8 @@ Siga os passos abaixo para rodar o projeto localmente:
 
 1. **Clone o repositorio**
    ```bash
-   git clone https://github.com/JoelRamalhoF/pratica_avaliada_08.git
-   cd pratica_avaliada_08
+   git clone https://github.com/JoelRamalhoF/pratica_avaliada_09.git
+   cd pratica_avaliada_09
    ```
 
 2. **Instale as dependencias**
@@ -132,7 +132,7 @@ A aplicacao foi desenvolvida com foco em **mobile-first**, garantindo uma experi
 
 ## 👨‍💻 Autor
 
-**Joel Ramalho**
+**Joel Ramalho Filho**
 
 - GitHub: [@JoelRamalhoF](https://github.com/JoelRamalhoF)
 
